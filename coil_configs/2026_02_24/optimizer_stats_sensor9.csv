@@ -1,0 +1,2 @@
+sensor_id,b0_Bx,b0_By,b0_Bz,target_Bx,target_By,target_Bz,final_Bx,final_By,final_Bz,err_Bx,err_By,err_Bz,success,n_coils_used,coils_used
+9,-1.67,-12.17,25.969,0.0,0.0,0.0,0.06759169227051554,1.334610606867118,1.2047818208933165,0.06759169227051554,1.334610606867118,1.2047818208933165,False,17,r1;r8;r10;r7;r11;c2;r5;r3;r9;c3;r16;r15;r14;r6;r13;r4;r12
