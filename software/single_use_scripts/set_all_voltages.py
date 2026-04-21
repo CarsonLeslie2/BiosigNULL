@@ -1,14 +1,19 @@
-# carson_pc_controller.py
+# set_all_voltages.py
 
 import json
 import time
+import inspect
 from pathlib import Path
 import tkinter as tk
 from tkinter import filedialog
 
 import pandas as pd
-import pyfirmata
 import serial
+
+if not hasattr(inspect, "getargspec"):
+    inspect.getargspec = inspect.getfullargspec
+
+import pyfirmata
 
 
 BAUD = 9600
@@ -40,19 +45,19 @@ VSET_LIST = {
     "r1": -1,
     "r2": -1,
     "r3": -1,
-    "r4": 0,
-    "r5": 0,
-    "r6": 0,
-    "r7": 0,
-    "r8": 0,
-    "r9": 0,
-    "r10": 0,
-    "r11": 0,
-    "r12": 0,
-    "r13": 0,
-    "r14": 0,
-    "r15": 0,
-    "r16": 0,
+    "r4": -1,
+    "r5": -1,
+    "r6": -1,
+    "r7": -1,
+    "r8": -1,
+    "r9": -1,
+    "r10": -1,
+    "r11": -1,
+    "r12": -1,
+    "r13": -1,
+    "r14": -1,
+    "r15": -1,
+    "r16": -1,
     "c1": 0,
     "c2": 0,
     "c3": 0,
@@ -100,6 +105,10 @@ ISET_DEFAULT = 0.05
 ISET_LIST = {c["name"]: ISET_DEFAULT for c in COILS}
 
 
+def is_relay_coil(coil_name):
+    return coil_name.startswith("r")
+
+
 def get_pin(coil_name, action):
     for item in ARDUINO_PINS:
         if item["coil"] == coil_name and item["action"] == action:
@@ -121,13 +130,17 @@ def pulse_relay(board, coil_name, action):
     print(f"Finished {action} pulse to {coil_name}")
 
 
-board = pyfirmata.Arduino(ARDUINO_PORT)
+board = pyfirmata.ArduinoMega(ARDUINO_PORT)
 
-for c in COILS:
-    pulse_relay(board, c["name"], "reset")
+relay_names = sorted(
+    set(item["coil"] for item in ARDUINO_PINS if is_relay_coil(item["coil"]))
+)
+
+for name in relay_names:
+    pulse_relay(board, name, "reset")
 
 for name, voltage in VSET_LIST.items():
-    if float(voltage) < 0:
+    if is_relay_coil(name) and float(voltage) < 0:
         pulse_relay(board, name, "set")
         VSET_LIST[name] = abs(float(voltage))
 
@@ -144,14 +157,21 @@ for c in COILS:
         raise ValueError(f"{name}: ISET must be > 0 A.")
 
 psus = {}
+active_coils = []
 
 for c in COILS:
     name = c["name"]
     port = c["port"]
-    psus[name] = serial.Serial(port, BAUD, timeout=0.5)
-    time.sleep(0.2)
+    print(f"Opening {name} on {port}")
 
-for c in COILS:
+    try:
+        psus[name] = serial.Serial(port, BAUD, timeout=0.5)
+        active_coils.append(c)
+        time.sleep(0.2)
+    except serial.SerialException as error:
+        print(f"Skipped {name} on {port}: {error}")
+
+for c in active_coils:
     psu = psus[c["name"]]
     psu.write(("OUT0" + TERMINATOR).encode("ascii"))
     psu.flush()
@@ -159,7 +179,7 @@ for c in COILS:
 vset_rb = {}
 iset_rb = {}
 
-for c in COILS:
+for c in active_coils:
     name = c["name"]
     ch = int(c["chan"])
     psu = psus[name]
@@ -199,7 +219,7 @@ for c in COILS:
 
 
 def kill_all_and_exit():
-    for c in COILS:
+    for c in active_coils:
         name = c["name"]
         ch = int(c["chan"])
         psu = psus.get(name)
@@ -222,7 +242,7 @@ print("\nInitial voltages to apply (VSET):")
 print("-------------------------------")
 print(f"{'coil':<6} {'VSET (V)':>12} {'port':>8}")
 
-for c in COILS:
+for c in active_coils:
     name = c["name"]
     v0 = float(VSET_LIST.get(name, 0.0))
     print(f"{name:<6} {v0:>12.4f} {c['port']:>8}")
@@ -233,7 +253,7 @@ resp = input("Proceed to turn outputs ON? [y/N]: ").strip().lower()
 if resp not in ("y", "yes"):
     kill_all_and_exit()
 
-for c in COILS:
+for c in active_coils:
     psu = psus[c["name"]]
     psu.write(("OUT1" + TERMINATOR).encode("ascii"))
     psu.flush()
@@ -249,7 +269,7 @@ def shutdown_everything():
     global running
     running = False
 
-    for c in COILS:
+    for c in active_coils:
         name = c["name"]
         ch = int(c["chan"])
         psu = psus.get(name)

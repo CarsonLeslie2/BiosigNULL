@@ -9,7 +9,7 @@ BAUD = 9600
 TERMINATOR = "\r\n"   
 TIMEOUT = 1.0
 
-for n in range(3, 24): # adjust as needed, cycle through all COM values. 
+for n in range(3, 22): # adjust as needed, cycle through all COM values. 
     port = f"COM{n}"
     try:
         psu = serial.Serial(port, BAUD, timeout=TIMEOUT, write_timeout=TIMEOUT)
