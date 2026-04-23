@@ -1,0 +1,262 @@
+{
+    "name": "Andrew_PC",
+    "coils": [
+        {
+            "name": "r1",
+            "port": "COM16",
+            "chan": 1
+        },
+        {
+            "name": "r2",
+            "port": "COM13",
+            "chan": 1
+        },
+        {
+            "name": "r3",
+            "port": "COM23",
+            "chan": 1
+        },
+        {
+            "name": "r4",
+            "port": "COM14",
+            "chan": 1
+        },
+        {
+            "name": "r5",
+            "port": "COM22",
+            "chan": 1
+        },
+        {
+            "name": "r6",
+            "port": "COM21",
+            "chan": 1
+        },
+        {
+            "name": "r7",
+            "port": "COM17",
+            "chan": 1
+        },
+        {
+            "name": "r8",
+            "port": "COM18",
+            "chan": 1
+        },
+        {
+            "name": "r9",
+            "port": "COM19",
+            "chan": 1
+        },
+        {
+            "name": "r10",
+            "port": "COM20",
+            "chan": 1
+        },
+        {
+            "name": "r11",
+            "port": "COM15",
+            "chan": 1
+        },
+        {
+            "name": "r12",
+            "port": "COM7",
+            "chan": 1
+        },
+        {
+            "name": "r13",
+            "port": "COM11",
+            "chan": 1
+        },
+        {
+            "name": "r14",
+            "port": "COM6",
+            "chan": 1
+        },
+        {
+            "name": "r15",
+            "port": "COM10",
+            "chan": 1
+        },
+        {
+            "name": "r16",
+            "port": "COM8",
+            "chan": 1
+        },
+        {
+            "name": "c1",
+            "port": "COM9",
+            "chan": 1
+        },
+        {
+            "name": "c2",
+            "port": "COM12",
+            "chan": 1
+        },
+        {
+            "name": "c3",
+            "port": "COM5",
+            "chan": 1
+        }
+    ],
+    "arduino_pins": [
+        {
+            "pin": 23,
+            "coil": "r14",
+            "action": "set"
+        },
+        {
+            "pin": 25,
+            "coil": "r14",
+            "action": "reset"
+        },
+        {
+            "pin": 29,
+            "coil": "r15",
+            "action": "set"
+        },
+        {
+            "pin": 31,
+            "coil": "r15",
+            "action": "reset"
+        },
+        {
+            "pin": 35,
+            "coil": "r16",
+            "action": "set"
+        },
+        {
+            "pin": 37,
+            "coil": "r16",
+            "action": "reset"
+        },
+        {
+            "pin": 41,
+            "coil": "r1",
+            "action": "set"
+        },
+        {
+            "pin": 43,
+            "coil": "r1",
+            "action": "reset"
+        },
+        {
+            "pin": 24,
+            "coil": "r2",
+            "action": "set"
+        },
+        {
+            "pin": 26,
+            "coil": "r2",
+            "action": "reset"
+        },
+        {
+            "pin": 30,
+            "coil": "r3",
+            "action": "set"
+        },
+        {
+            "pin": 32,
+            "coil": "r3",
+            "action": "reset"
+        },
+        {
+            "pin": 36,
+            "coil": "r4",
+            "action": "set"
+        },
+        {
+            "pin": 38,
+            "coil": "r4",
+            "action": "reset"
+        },
+        {
+            "pin": 42,
+            "coil": "r5",
+            "action": "set"
+        },
+        {
+            "pin": 44,
+            "coil": "r5",
+            "action": "reset"
+        },
+        {
+            "pin": 49,
+            "coil": "r6",
+            "action": "set"
+        },
+        {
+            "pin": 48,
+            "coil": "r6",
+            "action": "reset"
+        },
+        {
+            "pin": 2,
+            "coil": "r7",
+            "action": "set"
+        },
+        {
+            "pin": 3,
+            "coil": "r7",
+            "action": "reset"
+        },
+        {
+            "pin": 51,
+            "coil": "r8",
+            "action": "set"
+        },
+        {
+            "pin": 4,
+            "coil": "r8",
+            "action": "reset"
+        },
+        {
+            "pin": 52,
+            "coil": "r9",
+            "action": "set"
+        },
+        {
+            "pin": 53,
+            "coil": "r9",
+            "action": "reset"
+        },
+        {
+            "pin": 5,
+            "coil": "r11",
+            "action": "set"
+        },
+        {
+            "pin": 6,
+            "coil": "r11",
+            "action": "reset"
+        },
+        {
+            "pin": 7,
+            "coil": "r12",
+            "action": "set"
+        },
+        {
+            "pin": 8,
+            "coil": "r12",
+            "action": "reset"
+        },
+        {
+            "pin": 9,
+            "coil": "r13",
+            "action": "set"
+        },
+        {
+            "pin": 13,
+            "coil": "r13",
+            "action": "reset"
+        },
+        {
+            "pin": 11,
+            "coil": "r10",
+            "action": "set"
+        },
+        {
+            "pin": 12,
+            "coil": "r10",
+            "action": "reset"
+        }
+    ]
+}
