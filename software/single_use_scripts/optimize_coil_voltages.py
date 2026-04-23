@@ -143,7 +143,7 @@ w = np.concatenate(
 Aw = A * w[:, None]
 bw = (-b0) * w
 
-res = lsq_linear(Aw, bw, bounds=(0, V_MAX), lsmr_tol="auto", verbose=0)
+res = lsq_linear(Aw, bw, bounds=(-1*V_MAX, V_MAX), lsmr_tol="auto", verbose=0)
 V_sol = res.x
 
 print("\nCoils:", coil_labels)
